@@ -26,7 +26,7 @@
     region: "{{ region }}"
     replace_all_instances: yes
     vpc_zone_identifier: "{{ asg_subnets | join(',') }}"
-  until: asg_result.viable_instances|int >= asg_desired_capacity|int
+  until: (asg_result is defined) and (asg_result.viable_instances|int >= asg_desired_capacity|int)
   delay: 10
   retries: 120
   register: asg_result
